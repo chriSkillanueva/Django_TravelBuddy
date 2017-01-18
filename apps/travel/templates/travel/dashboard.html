@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Trvael Dashboard</title>
+    </head>
+    <body>
+        {% for x in info %}
+        <h3>Hello, {{x.name}}</h3>
+        {% endfor %}
+        <br>
+        <a href="/main/logout">Logout</a>
+        <br>
+        <h4>Your Trip Schedules</h4>
+        <table width="100%" border="1px solid black">
+            <thead>
+                <th width="20%"> Destination</th>
+                <th width="20%"> Travel Start Date</th>
+                <th width="20%"> Travel End Date</th>
+                <th width="40%"> Plan</th>
+            </thead>
+            <tbody>
+            {% for x in trips %}
+                <tr>
+                    <td><a href="/main/travels/destination/{{x.trip.id}}">{{x.trip.destination}}</a></td>
+                    <td>{{x.trip.start_date}}</td>
+                    <td>{{x.trip.end_date}}</td>
+                    <td>{{x.trip.plan}}</td>
+                <tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <a href="/main/travels/add">Add Travel Plan</a>
+        <br>
+        <h4>Other User's Travel Plans</h4>
+        <br>
+        {{request.session.join_error}}
+        <table width="100%" border="1px solid black">
+            <thead>
+                <th width="20%"> Name</th>
+                <th width="20%"> Destination</th>
+                <th width="20%"> Travel Start Date</th>
+                <th width="20%"> Travel End Date</th>
+                <th width="10%"> Do you want to Join?</th>
+                <th width="10%"> Change of plans?</th>
+            </thead>
+            <tbody>
+            {% for x in other_trips %}
+                <tr>
+                    <td>{{x.user.name}}</td>
+                    <td><a href="/main/travels/destination/{{x.id}}">{{x.destination}}</a></td>
+                    <td>{{x.start_date}}</td>
+                    <td>{{x.end_date}}</td>
+                    <td><a href="/main/travels/join/{{x.id}}">Join</a><br></td>
+                    <td><a href="/main/travels/unjoin/{{x.id}}">Unjoin</a><br></td>
+                <tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

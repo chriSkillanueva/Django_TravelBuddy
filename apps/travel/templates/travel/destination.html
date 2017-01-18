@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Destination</title>
+    </head>
+    <body>
+        <a href="/main/travels">Home</a>
+        <a href="/main/logout">Logout</a>
+        {% for x in details%}
+        <h3>{{x.destination}}</h3>
+            <p>Planned By: {{x.user.name}}</p>
+            <p>Plan: {{x.plan}}</p>
+            <p>Departure: {{x.start_date}}</p>
+            <p>Arrival: {{x.end_date}}</p>
+
+        <h3>Who is going on this trip?</h3>
+        {% for y in others %}
+            {% if y.user.name != x.user.name %}
+                <p>{{y.user.name}}</p>
+            {% endif %}
+        {% endfor %}
+
+        {% if x.user.id == request.session.current_user_id %}
+        <b>{{x.user.name}}, do you want to delete this trip?</b><br><br>
+        <a href="/main/travels/destination/delete/{{x.id}}">Delete</a><br><br>
+        <b>Click only if you are sure.</b>
+        {% endif %}
+        {% endfor %}
+    </body>
+</html>
